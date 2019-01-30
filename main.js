@@ -14,7 +14,7 @@ var messageTosendMain = require("./classes/messagesToSendMain");
 var utilities = require("./classes/utilities");
 var constants = require("./classes/constants");
 var consultaLogin = require("./services/login");
-var url = 'https://eu11.chat-api.com/instance20204/sendMessage?token=linoijx5h4glyl4b';
+var url = 'https://eu24.chat-api.com/instance23630/sendMessage?token=fhbjhwk1fvtfy2j4';
 var urlFile = 'https://eu11.chat-api.com/instance20204/sendFile?token=linoijx5h4glyl4b';
 var pdfFileUrl = 'https://botfacebookredinson.herokuapp.com/saludo';
 var objeto;
@@ -58,6 +58,7 @@ function manageUsers(messageRE, phoneRE, userNameRE, messageToSendRE) {
     if (user == undefined) {
         messageToSendRE = messageTosendMain.newMessage('menu', userNameRE);
         user = new User_1.User(phoneRE, messageToSendRE, 'menu');
+        console.log("phoneRE: " + phoneRE);
         users.set(phoneRE, user);
         sendMessage(user).then(function (res) {
             if (res) {

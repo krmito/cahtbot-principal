@@ -15,7 +15,7 @@ let utilities = require("./classes/utilities");
 let constants = require("./classes/constants");
 import consultaLogin = require("./services/login");
 
-let url: string = 'https://eu11.chat-api.com/instance20204/sendMessage?token=linoijx5h4glyl4b';
+let url: string = 'https://eu24.chat-api.com/instance23630/sendMessage?token=fhbjhwk1fvtfy2j4';
 let urlFile: string = 'https://eu11.chat-api.com/instance20204/sendFile?token=linoijx5h4glyl4b';
 let pdfFileUrl: string = 'https://botfacebookredinson.herokuapp.com/saludo';
 let objeto: any;
@@ -71,6 +71,8 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
     if (user == undefined) {
         messageToSendRE = messageTosendMain.newMessage('menu', userNameRE);
         user = new User(phoneRE, messageToSendRE, 'menu');
+        console.log("phoneRE: " + phoneRE);
+        
         users.set(phoneRE, user);
         sendMessage(user).then(res => {
             if (res) {
