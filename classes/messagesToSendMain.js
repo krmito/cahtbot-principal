@@ -10,4 +10,4 @@ var messagesToSendMain = {
         return mensaje;
     }
 };
-module.exports = messagesToSend;
+module.exports = messagesToSendMain;
