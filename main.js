@@ -41,7 +41,7 @@ app.post('/my_webhook_url', function (req, res) {
         var phone = String(element.author).split('@')[0];
         var message = element.body;
         var messageToSend = '';
-        if (!element.fromMe && element.author != '573225964155@c.us') {
+        if (!element.fromMe) {
             phones.add(phone);
             if (phones.has(phone)) {
                 console.log('phonese', phones);

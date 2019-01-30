@@ -49,7 +49,7 @@ app.post('/my_webhook_url', (req: any, res: any) => {
         let message = element.body;
         let messageToSend: string = '';
 
-        if (!element.fromMe && element.author != '573225964155@c.us') {
+        if (!element.fromMe) {
             phones.add(phone);
 
             if (phones.has(phone)) {
@@ -499,8 +499,6 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
     } else if (user.state == 'despedida1' && siga == true && constants.si.find((valueSaludo1: any) => utilities.isContain(messageRE, valueSaludo1))) {
         byeMessage(phoneRE, userNameRE, messageRE);
     }
-
-
 }
 
 function byeMessage(phoneRE: string, userNameRE: string, messageRE: string) {
@@ -570,10 +568,6 @@ function encodeBase64(filex: any) {
         reader.readAsDataURL(filex);
     });
 }
-
-
-
-
 
 function sendMessage(data: any) {
 
