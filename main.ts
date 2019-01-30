@@ -3,7 +3,7 @@ import request = require('request');
 import { User } from "./classes/User";
 import consultaAfiliadoEPS = require("./services/consultaAfiliadoEPS");
 import { Base64 } from 'js-base64';
-import { constantsLI, constantsRE, main } from "./classes/constants");
+import { constantsLI, constantsRE, main } from "./classes/constants";
 
 let app = require('express')();
 let FileReader = require('filereader');
