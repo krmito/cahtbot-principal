@@ -21,21 +21,6 @@ var acceso = /** @class */ (function () {
                 "password": "123456789"
             }
         };
-        /*         this.request.post({
-                        "headers": { "content-type": "multipart/form-data" },
-                        "url": this.servicio,
-                        "formData": JSON.stringify(formData)
-                    }, (error: any, response: any, body: any) => {
-                        console.log("RESPONSE: " + JSON.stringify(response));
-                        console.log("BODY: " + JSON.stringify(body));
-        
-                        if (!error && response.statusCode == 200) {
-                            callback(body);
-                        }
-                        else {
-                            console.log(error);
-                        }
-                    }); */
         this.request(options, function (error, response, body) {
             if (error)
                 console.log(error);

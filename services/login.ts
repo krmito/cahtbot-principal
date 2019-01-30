@@ -29,22 +29,6 @@ export class acceso {
                 "password": "123456789"
             }
         };
-
-        /*         this.request.post({
-                        "headers": { "content-type": "multipart/form-data" },
-                        "url": this.servicio,
-                        "formData": JSON.stringify(formData)
-                    }, (error: any, response: any, body: any) => {
-                        console.log("RESPONSE: " + JSON.stringify(response));
-                        console.log("BODY: " + JSON.stringify(body));
-        
-                        if (!error && response.statusCode == 200) {
-                            callback(body);
-                        }
-                        else {
-                            console.log(error);
-                        }
-                    }); */
         this.request(options, (error: any, response: any, body: any) => {
             if (error) console.log(error);
             console.log(body);
