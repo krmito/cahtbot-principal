@@ -13,7 +13,7 @@ let messageTosend = require("./classes/messagesToSend");
 let messageTosendMain = require("./classes/messagesToSendMain");
 let utilities = require("./classes/utilities");
 let constants = require("./classes/constants");
-
+import consultaLogin = require("./services/login");
 
 let url: string = 'https://eu11.chat-api.com/instance20204/sendMessage?token=linoijx5h4glyl4b';
 let urlFile: string = 'https://eu11.chat-api.com/instance20204/sendFile?token=linoijx5h4glyl4b';
@@ -48,7 +48,7 @@ app.post('/my_webhook_url', (req: any, res: any) => {
         let message = element.body;
         let messageToSend: string = '';
 
-        if (!element.fromMe && element.author != '573116902401@c.us') {
+        if (!element.fromMe && element.author != '573226458186@c.us') {
             phones.add(phone);
 
             if (phones.has(phone)) {
@@ -613,6 +613,15 @@ function descargaPdf(callback: any) {
 function consultarServicio(tipo: string, cedula: number) {
     consultaAfiliadoEPS.servicioAfiliadoEPS.armaObjetos(tipo, cedula, (x: any) => {
         datos = x;
+    });
+}
+
+
+function loguearse() {
+    consultaLogin.acceso.armaObjetos("", 0, (x: any) => {
+        datos = JSON.parse(x);
+        console.log("Datos:----> " + datos.data.token);
+        
     });
 }
 

@@ -5,7 +5,6 @@ var request = require("request");
 var User_1 = require("./classes/User");
 var consultaAfiliadoEPS = require("./services/consultaAfiliadoEPS");
 var constants_1 = require("./classes/constants");
-;
 var app = require('express')();
 var FileReader = require('filereader');
 var File = require("file-class");
@@ -14,6 +13,7 @@ var messageTosend = require("./classes/messagesToSend");
 var messageTosendMain = require("./classes/messagesToSendMain");
 var utilities = require("./classes/utilities");
 var constants = require("./classes/constants");
+var consultaLogin = require("./services/login");
 var url = 'https://eu11.chat-api.com/instance20204/sendMessage?token=linoijx5h4glyl4b';
 var urlFile = 'https://eu11.chat-api.com/instance20204/sendFile?token=linoijx5h4glyl4b';
 var pdfFileUrl = 'https://botfacebookredinson.herokuapp.com/saludo';
@@ -41,7 +41,7 @@ app.post('/my_webhook_url', function (req, res) {
         var phone = String(element.author).split('@')[0];
         var message = element.body;
         var messageToSend = '';
-        if (!element.fromMe && element.author != '573116902401@c.us') {
+        if (!element.fromMe && element.author != '573226458186@c.us') {
             phones.add(phone);
             if (phones.has(phone)) {
                 console.log('phonese', phones);
@@ -560,6 +560,12 @@ function descargaPdf(callback) {
 function consultarServicio(tipo, cedula) {
     consultaAfiliadoEPS.servicioAfiliadoEPS.armaObjetos(tipo, cedula, function (x) {
         datos = x;
+    });
+}
+function loguearse() {
+    consultaLogin.acceso.armaObjetos("", 0, function (x) {
+        datos = JSON.parse(x);
+        console.log("Datos:----> " + datos.data.token);
     });
 }
 var server = app.listen(process.env.PORT, function () {
