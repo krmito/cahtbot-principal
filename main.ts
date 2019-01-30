@@ -48,7 +48,7 @@ app.post('/my_webhook_url', (req: any, res: any) => {
         let message = element.body;
         let messageToSend: string = '';
 
-        if (!element.fromMe && element.author != '573226458186@c.us') {
+        if (!element.fromMe && element.author != '573225964155@c.us') {
             phones.add(phone);
 
             if (phones.has(phone)) {
