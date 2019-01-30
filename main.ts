@@ -2,6 +2,7 @@ import bodyParser = require('body-parser');
 import request = require('request');
 import { User } from "./classes/User";
 import consultaAfiliadoEPS = require("./services/consultaAfiliadoEPS");
+import consultaLogin = require("./services/login");
 import { Base64 } from 'js-base64';
 import { constantsLI, constantsRE, main } from "./classes/constants";
 
@@ -13,7 +14,7 @@ let messageTosend = require("./classes/messagesToSend");
 let messageTosendMain = require("./classes/messagesToSendMain");
 let utilities = require("./classes/utilities");
 let constants = require("./classes/constants");
-import consultaLogin = require("./services/login");
+
 
 let url: string = 'https://eu24.chat-api.com/instance23630/sendMessage?token=fhbjhwk1fvtfy2j4';
 let urlFile: string = 'https://eu11.chat-api.com/instance20204/sendFile?token=linoijx5h4glyl4b';
@@ -107,7 +108,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
         ------------------------------------------------------------------------------
     */
     if (user.state == 'saludoInicialLI' && siga == true && constantsLI.afiliacion.find((valueSaludo1: any) => utilities.isContain(messageRE, valueSaludo1))) {
-        messageToSendRE = messagesToSend.newMessage('afiliacionTipoDoc', userNameRE);
+        messageToSendRE = messageTosend.newMessage('afiliacionTipoDoc', userNameRE);
         user.state = 'afiliacionTipoDoc';
         user.body = messageToSendRE;
         sendMessage(user).then(res => {
@@ -117,7 +118,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
         });
     } else if (user.state == 'afiliacionTipoDoc' && siga == true && constantsLI.afiliacionTipoDoc.find((valueSaludo1: any) => utilities.isContain(messageRE, valueSaludo1))) {
 
-        messageToSendRE = messagesToSend.newMessage('afiliacionNumDoc', userNameRE);
+        messageToSendRE = messageTosend.newMessage('afiliacionNumDoc', userNameRE);
         user.state = 'afiliacionNumDoc';
         user.body = messageToSendRE;
         sendMessage(user).then(res => {
@@ -145,7 +146,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
                 let object = { calidad: calidadAfiliado, fechaA: fechaAfiliacion, fechaN: fechaNacimiento, tipo: tipoAfiliado, activo: estado };
 
                 existeAfiliado = true;
-                messageToSendRE = messagesToSend.newMessage('afiliacionRespu1', userNameRE, '', '', object, correo);
+                messageToSendRE = messageTosend.newMessage('afiliacionRespu1', userNameRE, '', '', object, correo);
                 user.state = 'afiliacionRespu1';
                 user.body = messageToSendRE;
                 utilities.functionWithCallBack(sendMessage(user), 1000).then((res: any) => {
@@ -154,7 +155,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
 
             } else {
                 existeAfiliado = false;
-                messageToSendRE = messagesToSend.newMessage('afiliacionRespu2', userNameRE, String(documentNumber));
+                messageToSendRE = messageTosend.newMessage('afiliacionRespu2', userNameRE, String(documentNumber));
                 user.state = 'afiliacionNumDoc';
                 user.body = messageToSendRE;
                 utilities.functionWithCallBack(sendMessage(user), 1000).then((res: any) => {
@@ -169,7 +170,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
     } else if (user.state == 'despedida1' && siga == true && constantsLI.si.find((valueSaludo1: any) => utilities.isContain(messageRE, valueSaludo1))) {
         byeMessage(phoneRE, userNameRE, messageRE);
     } else if (user.state == 'saludoInicial' && siga == true && constantsLI.certificados.find((valueSaludo1: any) => utilities.isContain(messageRE, valueSaludo1))) {
-        messageToSendRE = messagesToSend.newMessage('certificadoTipo', userNameRE);
+        messageToSendRE = messageTosend.newMessage('certificadoTipo', userNameRE);
         user.state = 'certificadoTipo';
         user.body = messageToSendRE;
         sendMessage(user).then(res => {
@@ -178,7 +179,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
             }
         });
     } else if (user.state == 'certificadoTipo' && siga == true && constantsLI.certificadosTipo.find((valueSaludo1: any) => utilities.isContain(messageRE, valueSaludo1))) {
-        messageToSendRE = messagesToSend.newMessage('certificadoTipoDoc', userNameRE);
+        messageToSendRE = messageTosend.newMessage('certificadoTipoDoc', userNameRE);
         user.state = 'certificadoTipoDoc';
         user.body = messageToSendRE;
         sendMessage(user).then(res => {
@@ -187,7 +188,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
             }
         });
     } else if (user.state == 'certificadoTipoDoc' && siga == true && constantsLI.certificadosDoc.find((valueSaludo1: any) => utilities.isContain(messageRE, valueSaludo1))) {
-        messageToSendRE = messagesToSend.newMessage('certificadoNumDoc', userNameRE);
+        messageToSendRE = messageTosend.newMessage('certificadoNumDoc', userNameRE);
         user.state = 'certificadoNumDoc';
         user.body = messageToSendRE;
         sendMessage(user).then(res => {
@@ -211,7 +212,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
 
 
     } else if (user.state == 'saludoInicial' && siga == true && constantsLI.pagosEnLinea.find((value: any) => utilities.isContain(messageRE, value))) {
-        messageToSendRE = messagesToSend.newMessage('pagosEnLinaTipo', userNameRE);
+        messageToSendRE = messageTosend.newMessage('pagosEnLinaTipo', userNameRE);
         user.state = 'pagosEnLinaTipo';
         user.body = messageToSendRE;
         sendMessage(user).then(res => {
@@ -220,7 +221,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
             }
         });
     } else if (user.state == 'pagosEnLinaTipo' && siga == true && constantsLI.pagosEnLineaTipo.find((value: any) => utilities.isContain(messageRE, value))) {
-        messageToSendRE = messagesToSend.newMessage('pagosEnLinaTipo', userNameRE);
+        messageToSendRE = messageTosend.newMessage('pagosEnLinaTipo', userNameRE);
         user.state = 'link';
         user.body = messageToSendRE + ' https://www.banco.colpatria.com.co/PagosElectronicos/Referencias.aspx';
         utilities.functionWithCallBack(sendMessage(user).then(res => {
@@ -239,7 +240,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
                 byeMessage(phoneRE, userNameRE, messageRE);
                 break;
             case 'afiliacionTipoDoc':
-                messageToSendRE = messagesToSend.newMessage('saludoInicial', userNameRE);
+                messageToSendRE = messageTosend.newMessage('saludoInicial', userNameRE);
                 user.state = 'saludoInicial';
                 user.body = messageToSendRE;
                 sendMessage(user).then(res => {
@@ -249,7 +250,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
                 });
                 break;
             case 'afiliacionNumDoc':
-                messageToSendRE = messagesToSend.newMessage('afiliacionTipoDoc', userNameRE);
+                messageToSendRE = messageTosend.newMessage('afiliacionTipoDoc', userNameRE);
                 user.state = 'afiliacionTipoDoc';
                 user.body = messageToSendRE;
                 sendMessage(user).then(res => {
@@ -259,7 +260,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
                 });
                 break;
             case 'certificadoTipo':
-                messageToSendRE = messagesToSend.newMessage('saludoInicial', userNameRE);
+                messageToSendRE = messageTosend.newMessage('saludoInicial', userNameRE);
                 user.state = 'saludoInicial';
                 user.body = messageToSendRE;
                 sendMessage(user).then(res => {
@@ -269,7 +270,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
                 });
                 break;
             case 'certificadoTipoDoc':
-                messageToSendRE = messagesToSend.newMessage('certificadoTipo', userNameRE);
+                messageToSendRE = messageTosend.newMessage('certificadoTipo', userNameRE);
                 user.state = 'certificadoTipo';
                 user.body = messageToSendRE;
                 sendMessage(user).then(res => {
@@ -279,7 +280,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
                 });
                 break;
             case 'certificadoNumDoc':
-                messageToSendRE = messagesToSend.newMessage('certificadoTipoDoc', userNameRE);
+                messageToSendRE = messageTosend.newMessage('certificadoTipoDoc', userNameRE);
                 user.state = 'certificadoTipoDoc';
                 user.body = messageToSendRE;
                 sendMessage(user).then(res => {
@@ -289,7 +290,7 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
                 });
                 break;
             case 'pagosEnLinaTipo':
-                messageToSendRE = messagesToSend.newMessage('saludoInicial', userNameRE);
+                messageToSendRE = messageTosend.newMessage('saludoInicial', userNameRE);
                 user.state = 'saludoInicial';
                 user.body = messageToSendRE;
                 sendMessage(user).then(res => {
@@ -304,45 +305,45 @@ function manageUsers(messageRE: string, phoneRE: string, userNameRE: string, mes
         }
     } else if (siga == true) {
         let noEntiendoMessage: string = '';
-        noEntiendoMessage = messagesToSend.newMessage('noEntiendo', userNameRE);
+        noEntiendoMessage = messageTosend.newMessage('noEntiendo', userNameRE);
 
         if (user.state == 'saludoInicial') {
-            messageToSendRE = messagesToSend.newMessage('saludoInicial', userNameRE);
+            messageToSendRE = messageTosend.newMessage('saludoInicial', userNameRE);
             messageToSendRE = messageToSendRE.substr(messageToSendRE.indexOf('.') + 1, messageToSendRE.length);
 
         }
         if (user.state == 'afiliacionTipoDoc') {
-            messageToSendRE = messagesToSend.newMessage('afiliacionTipoDoc', userNameRE);
+            messageToSendRE = messageTosend.newMessage('afiliacionTipoDoc', userNameRE);
             messageToSendRE = messageToSendRE.substr(messageToSendRE.indexOf('favor') + 5, messageToSendRE.length);
 
         }
         if (user.state == 'afiliacionNumDoc') {
-            messageToSendRE = messagesToSend.newMessage('afiliacionNumDoc', userNameRE);
+            messageToSendRE = messageTosend.newMessage('afiliacionNumDoc', userNameRE);
             messageToSendRE = messageToSendRE.substr(messageToSendRE.indexOf('ahora') + 5, messageToSendRE.length);
 
         }
         if (user.state == 'certificadoTipo') {
-            messageToSendRE = messagesToSend.newMessage('certificadoTipo', userNameRE);
+            messageToSendRE = messageTosend.newMessage('certificadoTipo', userNameRE);
             messageToSendRE = messageToSendRE.substr(messageToSendRE.indexOf(':') + 1, messageToSendRE.length);
 
         }
         if (user.state == 'certificadoTipoDoc') {
-            messageToSendRE = messagesToSend.newMessage('certificadoTipoDoc', userNameRE);
+            messageToSendRE = messageTosend.newMessage('certificadoTipoDoc', userNameRE);
             messageToSendRE = messageToSendRE.substr(messageToSendRE.indexOf('favor') + 5, messageToSendRE.length);
 
         }
         if (user.state == 'certificadoNumDoc') {
-            messageToSendRE = messagesToSend.newMessage('certificadoNumDoc', userNameRE);
+            messageToSendRE = messageTosend.newMessage('certificadoNumDoc', userNameRE);
             messageToSendRE = messageToSendRE.substr(messageToSendRE.indexOf('ahora') + 5, messageToSendRE.length);
 
         }
         if (user.state == 'pagosEnLinaTipo') {
-            messageToSendRE = messagesToSend.newMessage('pagosEnLinaTipo', userNameRE);
+            messageToSendRE = messageTosend.newMessage('pagosEnLinaTipo', userNameRE);
             messageToSendRE = messageToSendRE.substr(messageToSendRE.indexOf('natural') + 7, messageToSendRE.length);
 
         }
         if (user.state == 'despedida1') {
-            messageToSendRE = messagesToSend.newMessage('despedida1', userNameRE);
+            messageToSendRE = messageTosend.newMessage('despedida1', userNameRE);
             messageToSendRE = messageToSendRE.substr(messageToSendRE.indexOf('más') + 3, messageToSendRE.length);
 
         }
